@@ -3,7 +3,7 @@ using interview_api.Entities;
 
 namespace interview_api.Services
 {
-    public interface IPatient
+    public interface IPatientService
     {
         List<Patient> GetPatients();
         Patient GetPatient(int id);

@@ -4,7 +4,7 @@ using interview_api.Entities;
 
 namespace interview_api.Services
 {
-    public class PatientService
+    public class PatientService : IPatientService
     {
         private readonly List<Patient> patients;
 
