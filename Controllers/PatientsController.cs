@@ -8,7 +8,7 @@ using interview_api.Services;
 
 namespace interview_api.Controllers
 {
-    [Route("patients")]
+    [Route("api/patients")]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;
