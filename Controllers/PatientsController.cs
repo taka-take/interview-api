@@ -39,6 +39,51 @@ namespace interview_api.Controllers
             return Ok(outputModel);
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody]PatientInputModel inputModel)
+        {
+            if (inputModel == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            var model = ToDomainModel(inputModel);
+            patientService.AddPatient(model);
+
+            var outputModel = ToOutputModel(model);
+            return Created($"patients/{model.Id}", outputModel);
+        }
+
+        [HttpPut]
+        public IActionResult Update(int id, [FromBody]PatientInputModel inputModel)
+        {
+            if (inputModel == null || id!= inputModel.Id)
+                return BadRequest();
+
+            if (!patientService.PatientExists(id))
+                return NotFound();
+            
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            var model = ToDomainModel(inputModel);
+            patientService.UpdatePatient(model);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            if (!patientService.PatientExists(id))
+                return NotFound();
+
+            patientService.DeletePatient(id);
+
+            return NoContent();
+        }
         private PatientOutputModel ToOutputModel(Patient model)
         {
             return new PatientOutputModel
